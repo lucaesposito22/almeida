@@ -13,7 +13,8 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%);
+            /* Fundo: Gradiente baseado em #87b197 */
+            background: linear-gradient(135deg, #74a485 0%, #87b197 51%, #98c4a9 100%);
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -33,7 +34,7 @@
         h1 {
             font-size: 2.2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
         }
         
         .subtitle {
@@ -42,16 +43,18 @@
             opacity: 0.9;
         }
         
+        /* Ajuste do layout para 3 itens no info (removendo a pontuação) */
         .game-info {
-            display: flex;
-            justify-content: space-between;
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
             width: 100%;
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 12px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
             margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .info-item {
@@ -60,7 +63,7 @@
         
         .info-label {
             font-weight: bold;
-            color: #1e5799;
+            color: #5A8468; 
             font-size: 0.9rem;
         }
         
@@ -80,7 +83,7 @@
         
         .card {
             height: 110px;
-            background-color: #1e5799;
+            background-color: #87b197; 
             border-radius: 8px;
             display: flex;
             justify-content: center;
@@ -88,7 +91,7 @@
             cursor: pointer;
             transform-style: preserve-3d;
             transition: transform 0.5s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
         }
         
         .card.flipped {
@@ -109,7 +112,8 @@
         }
         
         .card-front {
-            background: linear-gradient(135deg, #1e5799 0%, #2989d8 100%);
+            /* Gradiente para a frente da carta */
+            background: linear-gradient(135deg, #87b197 0%, #98c4a9 100%);
             color: white;
             font-size: 1.8rem;
         }
@@ -117,7 +121,7 @@
         .card-back {
             background-color: white;
             transform: rotateY(180deg);
-            color: #1e5799;
+            color: #5A8468;
             font-weight: bold;
             font-size: 0.85rem;
             padding: 12px;
@@ -133,8 +137,8 @@
         
         button {
             padding: 10px 20px;
-            background-color: #ffcc00;
-            color: #1e5799;
+            background-color: #FFC107; /* Acento: Amarelo/Ouro */
+            color: #333; 
             border: none;
             border-radius: 5px;
             font-weight: bold;
@@ -145,27 +149,33 @@
         }
         
         button:hover {
-            background-color: #ffd633;
+            background-color: #FFD54F; 
             transform: translateY(-2px);
         }
         
         button:disabled {
             background-color: #cccccc;
+            color: #666;
             cursor: not-allowed;
             transform: none;
         }
         
-        .game-explanation {
+        .game-explanation, .student-info, .results {
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 15px;
             border-radius: 10px;
-            margin-bottom: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .results {
+            display: none; 
         }
         
-        .game-explanation h2 {
-            color: #1e5799;
+        .game-explanation h2, .student-info h2, .results h2 {
+            color: #5A8468; 
             margin-bottom: 10px;
             font-size: 1.3rem;
         }
@@ -174,22 +184,6 @@
             margin-bottom: 8px;
             line-height: 1.4;
             font-size: 0.9rem;
-        }
-        
-        .student-info {
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-        }
-        
-        .student-info h2 {
-            color: #1e5799;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
         }
         
         .student-form {
@@ -206,31 +200,14 @@
         label {
             font-weight: bold;
             margin-bottom: 5px;
-            color: #1e5799;
+            color: #5A8468; 
         }
         
         input, select {
             padding: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #aaa;
             border-radius: 5px;
             font-size: 0.9rem;
-        }
-        
-        .results {
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            display: none;
-        }
-        
-        .results h2 {
-            color: #1e5799;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
         }
         
         .results-content {
@@ -245,7 +222,7 @@
         
         .result-label {
             font-weight: bold;
-            color: #1e5799;
+            color: #5A8468; 
         }
         
         @media (max-width: 600px) {
@@ -268,6 +245,10 @@
             .results-content {
                 grid-template-columns: 1fr;
             }
+
+            .game-info {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -288,10 +269,6 @@
                 <label for="student-class">Turma:</label>
                 <input type="text" id="student-class" required>
             </div>
-            <div class="form-group">
-                <label for="student-date">Data:</label>
-                <input type="date" id="student-date" required>
-            </div>
             <button type="button" id="start-game-btn">Iniciar Jogo</button>
         </form>
     </div>
@@ -309,7 +286,7 @@
             <div class="info-label">Tempo</div>
             <div class="info-value" id="timer">0s</div>
         </div>
-    </div>
+        </div>
     
     <div class="controls" id="game-controls" style="display: none;">
         <button id="start-btn">Iniciar Jogo</button>
@@ -318,8 +295,7 @@
     </div>
     
     <div class="game-container" id="game-board" style="display: none;">
-        <!-- As cartas serão geradas dinamicamente pelo JavaScript -->
-    </div>
+        </div>
     
     <div class="results" id="results">
         <h2>Resultado da Avaliação</h2>
@@ -331,9 +307,6 @@
                 <div class="result-item">
                     <span class="result-label">Turma:</span> <span id="result-class"></span>
                 </div>
-                <div class="result-item">
-                    <span class="result-label">Data:</span> <span id="result-date"></span>
-                </div>
             </div>
             <div>
                 <div class="result-item">
@@ -343,7 +316,7 @@
                     <span class="result-label">Jogadas:</span> <span id="result-moves"></span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">Pontuação:</span> <span id="result-score"></span>
+                    <span class="result-label">Pontuação Final:</span> <span id="result-score"></span>
                 </div>
             </div>
         </div>
@@ -373,12 +346,11 @@
             const startBtn = document.getElementById('start-btn');
             const resetBtn = document.getElementById('reset-btn');
             const finishBtn = document.getElementById('finish-btn');
-            const printBtn = document.getElementById('print-btn');
-            
+            const printBtn = document.getElementById('print-btn'); // Botão de impressão
+
             // Elementos de resultados
             const resultName = document.getElementById('result-name');
             const resultClass = document.getElementById('result-class');
-            const resultDate = document.getElementById('result-date');
             const resultTime = document.getElementById('result-time');
             const resultMoves = document.getElementById('result-moves');
             const resultScore = document.getElementById('result-score');
@@ -389,6 +361,7 @@
             let matchedPairs = 0;
             let moves = 0;
             let timer = 0;
+            let score = 50; 
             let timerInterval;
             let gameStarted = false;
             let studentData = {};
@@ -403,13 +376,14 @@
                 { term: "Humanização", definition: "Valorização das relações humanas no cuidado" }
             ];
             
+            // --- Funções de Inicialização e Lógica ---
+            
             // Iniciar o jogo após preencher dados do aluno
             startGameBtn.addEventListener('click', () => {
                 const name = document.getElementById('student-name').value;
                 const studentClass = document.getElementById('student-class').value;
-                const date = document.getElementById('student-date').value;
                 
-                if (!name || !studentClass || !date) {
+                if (!name || !studentClass) {
                     alert('Por favor, preencha todos os campos!');
                     return;
                 }
@@ -417,15 +391,15 @@
                 // Salvar dados do aluno
                 studentData = {
                     name: name,
-                    class: studentClass,
-                    date: new Date(date).toLocaleDateString('pt-BR')
+                    class: studentClass
                 };
                 
-                // Mostrar elementos do jogo
+                // OCULTA o formulário do aluno e MOSTRA os elementos do jogo
                 studentForm.style.display = 'none';
-                gameInfo.style.display = 'flex';
+                gameInfo.style.display = 'grid'; 
                 gameControls.style.display = 'flex';
                 gameBoard.style.display = 'grid';
+                results.style.display = 'none'; 
                 
                 // Inicializar o jogo
                 resetGame();
@@ -435,13 +409,11 @@
             function initializeCards() {
                 cards = [];
                 
-                // Duplicar os conceitos para formar pares
                 pnepsConcepts.forEach(concept => {
                     cards.push({ ...concept, id: Math.random(), type: 'term' });
                     cards.push({ ...concept, id: Math.random(), type: 'definition' });
                 });
                 
-                // Embaralhar as cartas
                 cards.sort(() => Math.random() - 0.5);
             }
             
@@ -480,7 +452,6 @@
             function flipCard(cardElement, index) {
                 if (!gameStarted) return;
                 
-                // Não permitir virar mais de 2 cartas ou cartas já combinadas
                 if (flippedCards.length >= 2 || cardElement.classList.contains('flipped')) {
                     return;
                 }
@@ -488,7 +459,6 @@
                 cardElement.classList.add('flipped');
                 flippedCards.push({ element: cardElement, index });
                 
-                // Verificar se temos 2 cartas viradas
                 if (flippedCards.length === 2) {
                     moves++;
                     movesDisplay.textContent = moves;
@@ -503,24 +473,23 @@
                 const concept1 = cards[card1.index];
                 const concept2 = cards[card2.index];
                 
-                // Verificar se são do mesmo conceito (mesmo termo)
                 if (concept1.term === concept2.term && concept1.type !== concept2.type) {
                     // Par encontrado!
                     matchedPairs++;
                     matchesDisplay.textContent = `${matchedPairs}/6`;
                     
-                    // Remover eventos de clique das cartas combinadas
+                    card1.element.classList.add('matched');
+                    card2.element.classList.add('matched');
                     card1.element.style.pointerEvents = 'none';
                     card2.element.style.pointerEvents = 'none';
                     
                     flippedCards = [];
                     
-                    // Verificar se o jogo terminou
                     if (matchedPairs === 6) {
-                        endGame();
+                        setTimeout(endGame, 500); 
                     }
                 } else {
-                    // Não é um par, virar as cartas de volta após um tempo
+                    // Não é um par, virar as cartas de volta
                     setTimeout(() => {
                         card1.element.classList.remove('flipped');
                         card2.element.classList.remove('flipped');
@@ -537,6 +506,7 @@
                 moves = 0;
                 matchedPairs = 0;
                 timer = 0;
+                score = 50; 
                 
                 movesDisplay.textContent = moves;
                 matchesDisplay.textContent = `${matchedPairs}/6`;
@@ -552,19 +522,22 @@
                     timerDisplay.textContent = `${timer}s`;
                 }, 1000);
                 
-                startBtn.disabled = true;
+                startBtn.disabled = false;
             }
             
             // Finalizar o jogo
             function endGame() {
+                if (!gameStarted && matchedPairs !== 6) return; 
+                
                 gameStarted = false;
                 clearInterval(timerInterval);
                 
-                // Calcular pontuação (quanto menor o tempo e jogadas, maior a pontuação)
-                const score = Math.max(0, 100 - (moves * 2) - (timer));
-                
+                // Cálculo da Pontuação Final: Perde 1 ponto a cada 2 segundos
+                const penaltyPoints = Math.floor(timer / 2); 
+                score = Math.max(0, 50 - penaltyPoints);
+
                 // Mostrar resultados
-                showResults(score);
+                showResults();
             }
             
             // Reiniciar o jogo
@@ -575,6 +548,7 @@
                 moves = 0;
                 matchedPairs = 0;
                 timer = 0;
+                score = 50; 
                 
                 movesDisplay.textContent = moves;
                 matchesDisplay.textContent = `${matchedPairs}/6`;
@@ -584,34 +558,38 @@
                 createGameBoard();
                 
                 startBtn.disabled = false;
-                results.style.display = 'none';
+                results.style.display = 'none'; 
                 gameBoard.style.display = 'grid';
             }
             
             // Mostrar resultados
-            function showResults(score) {
+            function showResults() {
                 resultName.textContent = studentData.name;
                 resultClass.textContent = studentData.class;
-                resultDate.textContent = studentData.date;
                 resultTime.textContent = `${timer} segundos`;
                 resultMoves.textContent = moves;
                 resultScore.textContent = `${score} pontos`;
                 
+                // Oculta elementos do jogo e MOSTRA o resultado
                 results.style.display = 'block';
                 gameBoard.style.display = 'none';
+                gameInfo.style.display = 'none'; 
+                gameControls.style.display = 'none'; 
             }
             
-            // Finalizar o jogo manualmente
+            // Finalizar o jogo manualmente (usa a mesma lógica de cálculo)
             finishBtn.addEventListener('click', () => {
-                if (gameStarted) {
-                    const score = Math.max(0, 100 - (moves * 2) - (timer));
-                    showResults(score);
-                    gameStarted = false;
-                    clearInterval(timerInterval);
+                if (gameStarted || matchedPairs === 6) {
+                    endGame();
+                } else if (studentData.name) {
+                    // Se o jogo não foi iniciado, mas os dados do aluno estão preenchidos, calcula e mostra o resultado
+                    const penaltyPoints = Math.floor(timer / 2); 
+                    score = Math.max(0, 50 - penaltyPoints);
+                    showResults(); 
                 }
             });
-            
-            // Imprimir resultados
+
+            // NOVO: Tornar o botão de impressão funcional
             printBtn.addEventListener('click', () => {
                 window.print();
             });
@@ -620,9 +598,14 @@
             startBtn.addEventListener('click', startGame);
             resetBtn.addEventListener('click', resetGame);
             
-            // Configurar data atual como padrão
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('student-date').value = today;
+            // Inicialmente, esconde os elementos do jogo
+            gameInfo.style.display = 'none';
+            gameControls.style.display = 'none';
+            gameBoard.style.display = 'none';
+
+            // Chamada inicial (apenas prepara os dados)
+            initializeCards();
+            createGameBoard();
         });
     </script>
 </body>
