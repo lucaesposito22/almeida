@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória - PNEPs (Sala de Aula)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 51%, #2989d8 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #1e5799;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 800px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            height: 110px;
+            background-color: #1e5799;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #1e5799 0%, #2989d8 100%);
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            color: #1e5799;
+            font-weight: bold;
+            font-size: 0.85rem;
+            padding: 12px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            color: #1e5799;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+        
+        button:hover {
+            background-color: #ffd633;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .game-explanation {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-explanation h2 {
+            color: #1e5799;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .game-explanation p {
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+        
+        .student-info {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+        
+        .student-info h2 {
+            color: #1e5799;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .student-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1e5799;
+        }
+        
+        input, select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .results {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            display: none;
+        }
+        
+        .results h2 {
+            color: #1e5799;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .results-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .result-item {
+            margin-bottom: 8px;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #1e5799;
+        }
+        
+        @media (max-width: 600px) {
+            .game-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                height: 95px;
+            }
+            
+            .card-back {
+                font-size: 0.75rem;
+            }
+            
+            .results-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Jogo da Memória - PNEPs</h1>
+        <p class="subtitle">Avaliação de Conhecimento - Política Nacional de Educação Popular em Saúde</p>
+    </header>
+    
+    <div class="student-info" id="student-form">
+        <h2>Identificação do Aluno</h2>
+        <form class="student-form" id="student-data">
+            <div class="form-group">
+                <label for="student-name">Nome do Aluno:</label>
+                <input type="text" id="student-name" required>
+            </div>
+            <div class="form-group">
+                <label for="student-class">Turma:</label>
+                <input type="text" id="student-class" required>
+            </div>
+            <div class="form-group">
+                <label for="student-date">Data:</label>
+                <input type="date" id="student-date" required>
+            </div>
+            <button type="button" id="start-game-btn">Iniciar Jogo</button>
+        </form>
+    </div>
+    
+    <div class="game-info" id="game-info" style="display: none;">
+        <div class="info-item">
+            <div class="info-label">Jogadas</div>
+            <div class="info-value" id="moves">0</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Pares Encontrados</div>
+            <div class="info-value" id="matches">0/6</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Tempo</div>
+            <div class="info-value" id="timer">0s</div>
+        </div>
+    </div>
+    
+    <div class="controls" id="game-controls" style="display: none;">
+        <button id="start-btn">Iniciar Jogo</button>
+        <button id="reset-btn">Reiniciar</button>
+        <button id="finish-btn">Finalizar Jogo</button>
+    </div>
+    
+    <div class="game-container" id="game-board" style="display: none;">
+        <!-- As cartas serão geradas dinamicamente pelo JavaScript -->
+    </div>
+    
+    <div class="results" id="results">
+        <h2>Resultado da Avaliação</h2>
+        <div class="results-content">
+            <div>
+                <div class="result-item">
+                    <span class="result-label">Aluno:</span> <span id="result-name"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Turma:</span> <span id="result-class"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Data:</span> <span id="result-date"></span>
+                </div>
+            </div>
+            <div>
+                <div class="result-item">
+                    <span class="result-label">Tempo:</span> <span id="result-time"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Jogadas:</span> <span id="result-moves"></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Pontuação:</span> <span id="result-score"></span>
+                </div>
+            </div>
+        </div>
+        <button id="print-btn" style="margin-top: 15px;">Imprimir Resultado</button>
+    </div>
+    
+    <div class="game-explanation">
+        <h2>Sobre a PNEPs</h2>
+        <p>A Política Nacional de Educação Popular em Saúde (PNEP-SUS) valoriza os saberes e práticas populares em saúde, promovendo a participação social e o diálogo entre conhecimentos científicos e populares.</p>
+        <p><strong>Instruções:</strong> Combine cada conceito com sua definição correta. O jogo será avaliado pelo tempo, número de jogadas e acertos.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elementos do DOM
+            const studentForm = document.getElementById('student-form');
+            const gameInfo = document.getElementById('game-info');
+            const gameControls = document.getElementById('game-controls');
+            const gameBoard = document.getElementById('game-board');
+            const results = document.getElementById('results');
+            
+            const movesDisplay = document.getElementById('moves');
+            const matchesDisplay = document.getElementById('matches');
+            const timerDisplay = document.getElementById('timer');
+            
+            const startGameBtn = document.getElementById('start-game-btn');
+            const startBtn = document.getElementById('start-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const finishBtn = document.getElementById('finish-btn');
+            const printBtn = document.getElementById('print-btn');
+            
+            // Elementos de resultados
+            const resultName = document.getElementById('result-name');
+            const resultClass = document.getElementById('result-class');
+            const resultDate = document.getElementById('result-date');
+            const resultTime = document.getElementById('result-time');
+            const resultMoves = document.getElementById('result-moves');
+            const resultScore = document.getElementById('result-score');
+            
+            // Variáveis do jogo
+            let cards = [];
+            let flippedCards = [];
+            let matchedPairs = 0;
+            let moves = 0;
+            let timer = 0;
+            let timerInterval;
+            let gameStarted = false;
+            let studentData = {};
+            
+            // Conceitos da PNEPs (versão simplificada)
+            const pnepsConcepts = [
+                { term: "Participação Social", definition: "Envolvimento da comunidade nas decisões sobre saúde" },
+                { term: "Diálogo de Saberes", definition: "Troca entre conhecimentos populares e científicos" },
+                { term: "Educação Popular", definition: "Processo educativo baseado na realidade local" },
+                { term: "Empoderamento", definition: "Fortalecimento da autonomia das comunidades" },
+                { term: "Equidade", definition: "Busca pela justiça social no acesso à saúde" },
+                { term: "Humanização", definition: "Valorização das relações humanas no cuidado" }
+            ];
+            
+            // Iniciar o jogo após preencher dados do aluno
+            startGameBtn.addEventListener('click', () => {
+                const name = document.getElementById('student-name').value;
+                const studentClass = document.getElementById('student-class').value;
+                const date = document.getElementById('student-date').value;
+                
+                if (!name || !studentClass || !date) {
+                    alert('Por favor, preencha todos os campos!');
+                    return;
+                }
+                
+                // Salvar dados do aluno
+                studentData = {
+                    name: name,
+                    class: studentClass,
+                    date: new Date(date).toLocaleDateString('pt-BR')
+                };
+                
+                // Mostrar elementos do jogo
+                studentForm.style.display = 'none';
+                gameInfo.style.display = 'flex';
+                gameControls.style.display = 'flex';
+                gameBoard.style.display = 'grid';
+                
+                // Inicializar o jogo
+                resetGame();
+            });
+            
+            // Duplicar e embaralhar os conceitos
+            function initializeCards() {
+                cards = [];
+                
+                // Duplicar os conceitos para formar pares
+                pnepsConcepts.forEach(concept => {
+                    cards.push({ ...concept, id: Math.random(), type: 'term' });
+                    cards.push({ ...concept, id: Math.random(), type: 'definition' });
+                });
+                
+                // Embaralhar as cartas
+                cards.sort(() => Math.random() - 0.5);
+            }
+            
+            // Criar o tabuleiro do jogo
+            function createGameBoard() {
+                gameBoard.innerHTML = '';
+                
+                cards.forEach((card, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.classList.add('card');
+                    cardElement.dataset.index = index;
+                    
+                    const cardFront = document.createElement('div');
+                    cardFront.classList.add('card-front');
+                    cardFront.textContent = '?';
+                    
+                    const cardBack = document.createElement('div');
+                    cardBack.classList.add('card-back');
+                    
+                    if (card.type === 'term') {
+                        cardBack.textContent = card.term;
+                    } else {
+                        cardBack.textContent = card.definition;
+                    }
+                    
+                    cardElement.appendChild(cardFront);
+                    cardElement.appendChild(cardBack);
+                    
+                    cardElement.addEventListener('click', () => flipCard(cardElement, index));
+                    
+                    gameBoard.appendChild(cardElement);
+                });
+            }
+            
+            // Virar uma carta
+            function flipCard(cardElement, index) {
+                if (!gameStarted) return;
+                
+                // Não permitir virar mais de 2 cartas ou cartas já combinadas
+                if (flippedCards.length >= 2 || cardElement.classList.contains('flipped')) {
+                    return;
+                }
+                
+                cardElement.classList.add('flipped');
+                flippedCards.push({ element: cardElement, index });
+                
+                // Verificar se temos 2 cartas viradas
+                if (flippedCards.length === 2) {
+                    moves++;
+                    movesDisplay.textContent = moves;
+                    
+                    checkForMatch();
+                }
+            }
+            
+            // Verificar se as cartas viradas formam um par
+            function checkForMatch() {
+                const [card1, card2] = flippedCards;
+                const concept1 = cards[card1.index];
+                const concept2 = cards[card2.index];
+                
+                // Verificar se são do mesmo conceito (mesmo termo)
+                if (concept1.term === concept2.term && concept1.type !== concept2.type) {
+                    // Par encontrado!
+                    matchedPairs++;
+                    matchesDisplay.textContent = `${matchedPairs}/6`;
+                    
+                    // Remover eventos de clique das cartas combinadas
+                    card1.element.style.pointerEvents = 'none';
+                    card2.element.style.pointerEvents = 'none';
+                    
+                    flippedCards = [];
+                    
+                    // Verificar se o jogo terminou
+                    if (matchedPairs === 6) {
+                        endGame();
+                    }
+                } else {
+                    // Não é um par, virar as cartas de volta após um tempo
+                    setTimeout(() => {
+                        card1.element.classList.remove('flipped');
+                        card2.element.classList.remove('flipped');
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+            
+            // Iniciar o jogo
+            function startGame() {
+                if (gameStarted) return;
+                
+                gameStarted = true;
+                moves = 0;
+                matchedPairs = 0;
+                timer = 0;
+                
+                movesDisplay.textContent = moves;
+                matchesDisplay.textContent = `${matchedPairs}/6`;
+                timerDisplay.textContent = `${timer}s`;
+                
+                initializeCards();
+                createGameBoard();
+                
+                // Iniciar o temporizador
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timer++;
+                    timerDisplay.textContent = `${timer}s`;
+                }, 1000);
+                
+                startBtn.disabled = true;
+            }
+            
+            // Finalizar o jogo
+            function endGame() {
+                gameStarted = false;
+                clearInterval(timerInterval);
+                
+                // Calcular pontuação (quanto menor o tempo e jogadas, maior a pontuação)
+                const score = Math.max(0, 100 - (moves * 2) - (timer));
+                
+                // Mostrar resultados
+                showResults(score);
+            }
+            
+            // Reiniciar o jogo
+            function resetGame() {
+                gameStarted = false;
+                clearInterval(timerInterval);
+                
+                moves = 0;
+                matchedPairs = 0;
+                timer = 0;
+                
+                movesDisplay.textContent = moves;
+                matchesDisplay.textContent = `${matchedPairs}/6`;
+                timerDisplay.textContent = `${timer}s`;
+                
+                initializeCards();
+                createGameBoard();
+                
+                startBtn.disabled = false;
+                results.style.display = 'none';
+                gameBoard.style.display = 'grid';
+            }
+            
+            // Mostrar resultados
+            function showResults(score) {
+                resultName.textContent = studentData.name;
+                resultClass.textContent = studentData.class;
+                resultDate.textContent = studentData.date;
+                resultTime.textContent = `${timer} segundos`;
+                resultMoves.textContent = moves;
+                resultScore.textContent = `${score} pontos`;
+                
+                results.style.display = 'block';
+                gameBoard.style.display = 'none';
+            }
+            
+            // Finalizar o jogo manualmente
+            finishBtn.addEventListener('click', () => {
+                if (gameStarted) {
+                    const score = Math.max(0, 100 - (moves * 2) - (timer));
+                    showResults(score);
+                    gameStarted = false;
+                    clearInterval(timerInterval);
+                }
+            });
+            
+            // Imprimir resultados
+            printBtn.addEventListener('click', () => {
+                window.print();
+            });
+            
+            // Event listeners
+            startBtn.addEventListener('click', startGame);
+            resetBtn.addEventListener('click', resetGame);
+            
+            // Configurar data atual como padrão
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('student-date').value = today;
+        });
+    </script>
+</body>
+</html>
